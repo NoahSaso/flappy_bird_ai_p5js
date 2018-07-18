@@ -29,9 +29,9 @@ function setup() {
   infoP = createP(infoPHTML());
   createP('Game Speed:');
   var difficultySpeedSlider = createSlider(1, 50, difficultySpeed);
-  difficultySpeedSlider.changed(function () {
+  difficultySpeedSlider.changed(() => {
     difficultySpeed = difficultySpeedSlider.value();
-  })
+  });
   button = createButton('Save Current Population');
   button.mousePressed(saveCurrentPopulation);
 
