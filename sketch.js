@@ -14,6 +14,23 @@ var currScore = 0;
 
 var pipesRekt = 0;
 
+var isAIPlaying = false;
+
+var gameSpeedP;
+
+function beginAI() {
+  isAIPlaying = true;
+  var newPop = [];
+  for(var i = 0; i < BIRD_COUNT; i++){
+    var json = trainedPop[i % trainedPop.length];
+    newPop[i] = neataptic.Network.fromJSON(json);
+  }
+  neat.population = newPop;
+  birds = [new Bird(neat.population[0])];
+  pipes = [new Pipe()];
+  baseFrame = frameCount - 1;
+}
+
 function infoPHTML() {
   return `Generation: ${neat.generation}<br>Highest Score: ${highestScore}<br>Current Score: ${currScore}<br>Pipes Rekt: ${pipesRekt}<br>Remaining Alive: ${remainingAlive}`;
 }
@@ -27,13 +44,15 @@ function setup() {
   // drawGraph(network.graph(800, 800), '.draw');
 
   infoP = createP(infoPHTML());
-  createP('Game Speed:');
-  var difficultySpeedSlider = createSlider(1, 50, difficultySpeed);
+  gameSpeedP = createP('Game Speed: ' + difficultySpeed);
+  var difficultySpeedSlider = createSlider(1, 10, difficultySpeed);
   difficultySpeedSlider.changed(() => {
     difficultySpeed = difficultySpeedSlider.value();
+    gameSpeedP.html('Game Speed: ' + difficultySpeed);
   });
-  button = createButton('Save Current Population');
-  button.mousePressed(saveCurrentPopulation);
+
+  createButton('Save Current Population').mousePressed(saveCurrentPopulation);
+  createButton('Watch Trained AI').mousePressed(beginAI);
 
   startEvaluation();
 }
@@ -56,7 +75,7 @@ function draw() {
 
   infoP.html(infoPHTML());
 
-  if (allHaveDied) {
+  if (!isAIPlaying && allHaveDied) {
     endEvaluation();
     return;
   }

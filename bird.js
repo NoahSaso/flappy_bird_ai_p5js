@@ -5,7 +5,8 @@ function Bird(genome) {
 
   this.gravity = 0.5;
   this.lift = -10;
-  this.velocity = -10;
+  // starting velocity
+  this.velocity = this.lift;
 
   this.brain = genome;
   this.brain.score = 0;
@@ -42,8 +43,17 @@ function Bird(genome) {
     for (var i = 0; i < pipes.length; i++) {
       let pipe = pipes[i];
       if (pipe.hits(this) || this.y - this.size / 2 < 0 || this.y + this.size / 2 > height) {
-        this.dead = true;
-        return;
+        if (isAIPlaying) {
+          // reset
+          this.y = height / 2;
+          this.velocity = this.lift;
+          this.brain.score = 0;
+          pipes = [new Pipe()];
+          baseFrame = frameCount - 1;
+        } else {
+          this.dead = true;
+          return;
+        }
       }
     }
 
