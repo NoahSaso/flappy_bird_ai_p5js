@@ -6,4 +6,4 @@ Base game is a version of [https://www.youtube.com/watch?v=cXgA1d_E-jY](https://
 
 Mess with it here:
 
-[http://htmlpreview.github.io/?https://github.com/NoahSaso/flappy_bird_ai_p5js/blob/master/index.html](http://htmlpreview.github.io/?https://github.com/NoahSaso/flappy_bird_ai_p5js/blob/master/index.html)
+[https://noahsaso.github.io/flappy_bird_ai_p5js](https://noahsaso.github.io/flappy_bird_ai_p5js/)
